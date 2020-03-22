@@ -1,7 +1,7 @@
 # How to use
 
 ## Example:
-```
+```javascript
 (async() => {
  //Set default price, country, and activate random number
  //Service - vk, max price - 0.67 RUB, random number - true, country - 0
