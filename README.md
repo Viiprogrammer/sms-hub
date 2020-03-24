@@ -10,7 +10,7 @@ npm i smshub
 
 # How to use
 ```javascript
-const SMShub = require('smshub'),
+const SMShub = require('smshub');
 const sms = new SMShub({
   url: 'https://smshub.org/stubs/handler_api.php', 
   token: 'TOKEN'
