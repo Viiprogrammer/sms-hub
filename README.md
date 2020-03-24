@@ -39,6 +39,7 @@ const sms = new SMShub({
  });
 })();
 ```
+***All errors are returned via rejection***
 
 #### getNumber(numberID, StatusCode)
 - returns [`<[Promise]>`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Promise): 
@@ -51,7 +52,7 @@ const sms = new SMShub({
  - [`<[Object]>`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) `{data: DATA}` - Success, `DATA` - status code from SMSHub
  - [`<[Object]>`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) `{type: 'api', error: ERRORCODE, id: NUMBERID}` - Api error (error codes here https://smshub.org/main#setStatus)
  - [`<[Object]>`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) `{type: 'requset', id: NUMBERID}` - request error
- 
+
 #### getCode(numberID)
 - returns [`<[Promise]>`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Promise): 
  - [`<[Object]>`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) `{code: CODE, id: NUMBERID}` - Success.
