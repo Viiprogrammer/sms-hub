@@ -39,7 +39,7 @@ const sms = new SMShub({
  });
 })();
 ```
-***All errors are returned via rejection***
+***All errors can be caught via catch***
 
 #### getNumber(numberID, StatusCode)
 - returns [`<[Promise]>`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Promise): 
