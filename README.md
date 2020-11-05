@@ -19,35 +19,31 @@ const sms = new SMShub({
 (async() => {
  //Set default price, country, and activate random number
  //Service - vk, max price - 0.67 RUB, random number - true, country - 0
- await sms.setParams('vk', 0.67, true,  0);
- //Service - vk, country - 0
- await sms.getBalance().then(async(balance) =>{
-   if(balance > 0){
-      sms.getNumber('vk', 0).then(async(obj) => {
-        console.log('ID:', obj.id);
-        console.log('Number:', obj.number);
-        //Set "message has been sent" status
-        sms.setStatus(obj.id, 1).then(async(x) => {
-            //Wait for code
-            sms.getCode(obj.id).then(async(code_obj) => {
-                console.log('Code:', code_obj.code);
-                sms.setStatus(code_obj.id, 6); //Accept, end
-            });
-        });
-      });
-   } else console.log('No money');
- });
+ await sms.setParams('vk', '0.67', true,  0);
+ const balance = await sms.getBalance();
+ if(balance > 0){
+    const {id, number} = await sms.getNumber('vk', 0);
+    console.log('Number ID:', id);
+    console.log('Number:', number);
+    //Set "message has been sent" status
+    await sms.setStatus(id, 1);
+    //Wait for code
+    await sms.getCode(id).then(async({id, code}) => {
+       console.log('Code:', code);
+       await sms.setStatus(id, 6); //Accept, end
+    });   
+ } else console.log('No money');
 })();
 ```
 ***All errors can be caught via catch***
 
-#### getNumber(numberID, StatusCode)
+#### getNumber(service, country)
 - returns [`<[Promise]>`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Promise): 
  - [`<[Object]>`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) `{id: ID, number: NUMBER}` - Success.
  - [`<[Object]>`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) `{type: 'api', country: COUNTRY, service: SERVICE}` - Api error (error codes here https://smshub.org/main#getNumbers)
  - [`<[Object]>`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) `{type: 'requset', country: COUNTRY, service: SERVICE}` - request 
  
-#### setStatus(service, country = 0)
+#### setStatus(numberID, statusID)
 - returns [`<[Promise]>`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Promise): 
  - [`<[Object]>`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) `{data: DATA}` - Success, `DATA` - status code from SMSHub
  - [`<[Object]>`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) `{type: 'api', error: ERRORCODE, id: NUMBERID}` - Api error (error codes here https://smshub.org/main#setStatus)
