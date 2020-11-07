@@ -100,7 +100,7 @@ class SMSHub {
                 if (response && response.statusCode === 200) {
                     let {data, error} = this.checkErr(body);
                     if (data && !error) {
-                        resolve({balance: data.split(':')[1]});
+                        resolve({balance: parseFloat(data.split(':')[1])});
                     } else {
                         reject({type: 'api', error: error});
                     }
@@ -186,15 +186,14 @@ class SMSHub {
 
     async getNumber(service, country = 0) {
         return new Promise((resolve, reject) => {
-            let self_class = this;
             request({
                 url: this.url,
                 timeout: this.timeout,
                 qs: {api_key: this.token, action: 'getNumber', service: service, country: country}
-            }, function (error, response, body) {
+            }, (error, response, body) => {
                 if (error) reject({type: 'requset', country: country, service: service});
                 if (response && response.statusCode === 200) {
-                    let {data, error} = self_class.checkErr(body);
+                    let {data, error} = this.checkErr(body);
                     if (data && !error) {
                         data = data.split(':');
                         if (data[0] === 'ACCESS_NUMBER') {
