@@ -166,15 +166,15 @@ class SMSHub {
                     let {data, error} = this.checkErr(body);
                     if (data && !error) {
                         ((data === 'STATUS_WAIT_CODE' || data === 'STATUS_CANCEL') && resolve({data: data}))
-                        let status_ = data.split(':');
-                        if (status_.length) {
-                            switch (status_[0]) {
+                        let [type, code] = data.split(':');
+                        if (type.length) {
+                            switch (type) {
                                 case 'STATUS_WAIT_RETRY':
-                                    resolve({data: status_[0], lastcode: status_[1], id: id})
+                                    resolve({data: type, lastcode: code, id: id})
                                     break;
 
                                 case 'STATUS_OK':
-                                    resolve({data: status_[0], code: status_[1], id: id})
+                                    resolve({data: type, code: code, id: id})
                                     break;
                             }
                         }
@@ -195,9 +195,9 @@ class SMSHub {
                 if (response && response.statusCode === 200) {
                     let {data, error} = this.checkErr(body);
                     if (data && !error) {
-                        data = data.split(':');
-                        if (data[0] === 'ACCESS_NUMBER') {
-                            resolve({id: parseInt(data[1]), number: parseInt(data[2])});
+                        let [response, id, number] = data.split(':');
+                        if (response === 'ACCESS_NUMBER') {
+                            resolve({id: id, number: parseInt(number)});
                         }
                     } else reject({type: 'api', country: country, service: service});
                 }
