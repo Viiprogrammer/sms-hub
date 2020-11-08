@@ -11,6 +11,7 @@ or
 ```bash
 yarn add smshub
 ```
+[![NPM](https://nodei.co/npm/smshub.png?downloads=true&stars=true)](https://nodei.co/npm/smshub/)
 
 # How to use
 ```javascript
