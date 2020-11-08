@@ -44,40 +44,40 @@ const sms = new SMShub({
 #### `Promise` getNumber(`service`, `country`) 
 ```javascript
  {id: ID, number: NUMBER} - Success.
- {type: 'api', country: COUNTRY, service: SERVICE} - Api error (error codes here https://smshub.org/main#getNumbers)
- {type: 'requset', country: COUNTRY, service: SERVICE} - request 
+ {type: 'api', country: COUNTRY, service: SERVICE} //Api error (error codes here https://smshub.org/main#getNumbers)
+ {type: 'requset', country: COUNTRY, service: SERVICE} //Request 
 ``` 
 #### `Promise` setStatus(`numberID`, `statusID`) 
 ```javascript
- {data: DATA} - Success, `DATA` - status code from SMSHub
- {type: 'api', error: ERRORCODE, id: NUMBERID} - Api error (error codes here https://smshub.org/main#setStatus)
- {type: 'requset', id: NUMBERID} - request error
+ {data: DATA} // Success, `DATA` - status code from SMSHub
+ {type: 'api', error: ERRORCODE, id: NUMBERID} //Api error (error codes here https://smshub.org/main#setStatus)
+ {type: 'requset', id: NUMBERID} //Request error
 ``` 
 #### `Promise` getCode(`numberID`) 
 ```javascript
- {code: CODE, id: NUMBERID} - Success.
- {type: 'status', error: 'STATUS_CANCEL', id: NUMBERID}` - if number cancelled
- {type: 'api', error: ERRORCODE, id: NUMBERID} - Api error (error codes here https://smshub.org/main#getStatus)
- {type: 'requset', id: NUMBERID} - request error
+ {code: CODE, id: NUMBERID} //Success
+ {type: 'status', error: 'STATUS_CANCEL', id: NUMBERID} // if number cancelled
+ {type: 'api', error: ERRORCODE, id: NUMBERID} // Api error (error codes here https://smshub.org/main#getStatus)
+ {type: 'requset', id: NUMBERID} //Request error
 ``` 
   
 #### `Promise` getBalance() 
 ```javascript
  {balance: BALANCE} - Success. BALANCE - float
- {type: 'api', error: ERRORCODE} - Api error (error codes here https://smshub.org/main#getBalance)
- {type: 'requset'} - request error
+ {type: 'api', error: ERRORCODE} //Api error (error codes here https://smshub.org/main#getBalance)
+ {type: 'requset'} //Request error
 ``` 
 #### `Promise` getNumbersStatusAndCostHubFree() 
 ```javascript
  Object - Success.
- {type: 'api', error: ERRORCODE} - Api error (error codes here https://smshub.org/main#getBalance)
- {type: 'requset'} - request error
+ {type: 'api', error: ERRORCODE} //Api error (error codes here https://smshub.org/main#getBalance)
+ {type: 'requset'} //Request error
 ``` 
 
 #### `Promise` setParams(`service`, `maxPrice`, `random = true`, `country = 0`)
 ```javascript
  {type: 'api', error: ERRORCODE}// Api error (error codes here https://smshub.org/main#getBalance)
- {type: 'requset'}//Request error
+ {type: 'requset'} //Request error
 ``` 
 #### `Promise` getCurrentActivations()
 ```javascript
