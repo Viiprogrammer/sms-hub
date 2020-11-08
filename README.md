@@ -9,7 +9,7 @@ npm i smshub
 ```
 or
 ```bash
-yarn install smshub
+yarn add smshub
 ```
 
 # How to use
