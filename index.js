@@ -197,7 +197,7 @@ class SMSHub {
                     if (data && !error) {
                         let [response, id, number] = data.split(':');
                         if (response === 'ACCESS_NUMBER') {
-                            resolve({id: id, number: parseInt(number)});
+                            resolve({id: id, number: number});
                         }
                     } else reject({type: 'api', country: country, service: service});
                 }

@@ -58,7 +58,7 @@ describe("Number request", function () {
     it("getNumber()", (done) => {
         sms.getNumber('vk', 0).then(({id, number}) => {
             expect(id).to.equal('7788');
-            expect(number).to.equal(654654);
+            expect(number).to.equal('654654');
             done();
         }).catch(done);
 
