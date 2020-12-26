@@ -24,7 +24,7 @@ class SMSHub {
                 timeout: this.timeout,
                 qs: {api_key: this.token, action: 'getCurrentActivations'}
             }, (error, response, body) => {
-                if (error) reject({type: 'requset'});
+                if (error) reject({type: 'request'});
                 if (response && response.statusCode === 200) {
                     let {data, error} = this.checkErr(body);
                     if (data && !error) {
@@ -34,6 +34,83 @@ class SMSHub {
                         } else if (d.status === 'success') {
                             resolve({data: d.array});
                         }
+                    } else {
+                        reject({type: 'api', error: error});
+                    }
+                }
+            });
+        });
+    }
+
+    async operatorAndCountryChange(operator = 'any', country = 0, url = 'https://smshub.org/api.php') {
+        return new Promise((resolve, reject) => {
+
+            request({
+                url: url,
+                timeout: this.timeout,
+                method: 'POST',
+                form:{
+                    cat:	"scripts",
+                    act:	"manageActivations",
+                    asc:	"operatorChange",
+                    apikey:	this.token,
+                    country:	country,
+                    operator:	operator
+                },
+            }, (error, response, body) => {
+                if (error) reject({type: 'request'});
+                if (response && response.statusCode === 200) {
+                    let {error} = this.checkErr(body);
+                    let response;
+
+                    if (!error) {
+                        try {
+                            response = JSON.parse(body)
+                            resolve(response)
+                        } catch (e) {
+                            reject({type: 'api', error: 'WRONG_RESPONSE'});
+                        }
+
+
+                    } else {
+                        reject({type: 'api', error: error});
+                    }
+                }
+            });
+        });
+    }
+
+    async getListOfCountriesAndOperators(url = 'https://smshub.org/api.php') {
+        return new Promise((resolve, reject) => {
+
+            request({
+                url: url,
+                timeout: this.timeout,
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                },
+                form:{
+                    cat:	"scripts",
+                    act:	"manageActivations",
+                    asc:	"getListOfCountriesAndOperators",
+                    apikey:	this.token,
+                },
+            }, (error, response, body) => {
+                if (error) reject({type: 'request'});
+                if (response && response.statusCode === 200) {
+                    let {error} = this.checkErr(body);
+                    let response;
+
+                    if (!error) {
+                        try {
+                            response = JSON.parse(body)
+                            resolve(response)
+                        } catch (e) {
+                            reject({type: 'api', error: 'WRONG_RESPONSE'});
+                        }
+
+
                     } else {
                         reject({type: 'api', error: error});
                     }
@@ -56,7 +133,7 @@ class SMSHub {
                     random: random
                 }
             }, (error, response, body) => {
-                if (error) reject({type: 'requset'});
+                if (error) reject({type: 'request'});
                 if (response && response.statusCode === 200) {
                     let {error} = this.checkErr(body);
                     if (!error) {
@@ -76,7 +153,7 @@ class SMSHub {
                 timeout: this.timeout,
                 qs: {api_key: this.token, action: 'getNumbersStatusAndCostHubFree'}
             }, (error, response, body) => {
-                if (error) reject({type: 'requset'});
+                if (error) reject({type: 'request'});
                 if (response && response.statusCode === 200) {
                     let {data, error} = this.checkErr(body);
                     if (data && !error) {
@@ -96,7 +173,7 @@ class SMSHub {
                 timeout: this.timeout,
                 qs: {api_key: this.token, action: 'getBalance'}
             }, (error, response, body) => {
-                if (error) reject({type: 'requset'});
+                if (error) reject({type: 'request'});
                 if (response && response.statusCode === 200) {
                     let {data, error} = this.checkErr(body);
                     if (data && !error) {
@@ -142,7 +219,7 @@ class SMSHub {
                     status: status_
                 }
             }, (error, response, body) => {
-                if (error) reject({type: 'requset', id: id});
+                if (error) reject({type: 'request', id: id});
 
                 if (response && response.statusCode === 200) {
                     let {data, error} = this.checkErr(body);
@@ -161,7 +238,7 @@ class SMSHub {
                 timeout: this.timeout,
                 qs: {api_key: this.token, action: 'getStatus', id: id}
             }, (error, response, body) => {
-                if (error) reject({type: 'requset', id: id});
+                if (error) reject({type: 'request', id: id});
                 if (response && response.statusCode === 200) {
                     let {data, error} = this.checkErr(body);
                     if (data && !error) {
@@ -191,7 +268,7 @@ class SMSHub {
                 timeout: this.timeout,
                 qs: {api_key: this.token, action: 'getNumber', service: service, country: country}
             }, (error, response, body) => {
-                if (error) reject({type: 'requset', country: country, service: service});
+                if (error) reject({type: 'request', country: country, service: service});
                 if (response && response.statusCode === 200) {
                     let {data, error} = this.checkErr(body);
                     if (data && !error) {
