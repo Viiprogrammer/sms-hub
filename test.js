@@ -45,6 +45,29 @@ describe("Error handler", function () {
         done();
     });
 });
+describe("operatorAndCountryChange (Change operator and country)", function () {
+    it("operatorAndCountryChange()", function (done) {
+            sms.operatorAndCountryChange('mtt', 0).then(({status, msg}) => {
+                expect(status).to.equal('success')
+                expect(msg).to.equal("Оператор успешно изменен")
+                done();
+            }).catch(done);
+    });
+});
+
+describe("getListOfCountriesAndOperators", function () {
+    it("getListOfCountriesAndOperators()", function (done) {
+        sms.getListOfCountriesAndOperators().then(({status, services, data,  currentOperator, currentCountry}) => {
+            console.log( currentOperator)
+            expect(status).to.equal('success')
+            if(services && data.length){
+                done();
+            }
+
+        }).catch(done);
+    });
+});
+
 describe("Balance request", function () {
     it("getBalance()", (done) => {
         sms.getBalance().then(({balance}) => {
