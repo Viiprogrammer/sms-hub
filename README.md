@@ -25,6 +25,9 @@ const sms = new SMShub({
  //Set default price, country, and activate random number
  //Service - vk, max price - 0.67 RUB, random number - true, country - 0
  await sms.setParams('vk', '0.67', true,  0);
+ await sms.operatorAndCountryChange('mts', 0);
+ //Logging List Of Countries And Operators
+ await sms.getListOfCountriesAndOperators().then(console.log);
  const balance = await sms.getBalance();
  if(balance > 0){
     const {id, number} = await sms.getNumber('vk', 0);
@@ -46,43 +49,66 @@ const sms = new SMShub({
 ```javascript
  {id: ID, number: NUMBER} - Success.
  {type: 'api', country: COUNTRY, service: SERVICE} //Api error (error codes here https://smshub.org/main#getNumbers)
- {type: 'requset', country: COUNTRY, service: SERVICE} //Request 
+ {type: 'request', country: COUNTRY, service: SERVICE} //Request 
 ``` 
 #### `Promise` setStatus(`numberID`, `statusID`) 
 ```javascript
  {data: DATA} // Success, `DATA` - status code from SMSHub
  {type: 'api', error: ERRORCODE, id: NUMBERID} //Api error (error codes here https://smshub.org/main#setStatus)
- {type: 'requset', id: NUMBERID} //Request error
+ {type: 'request', id: NUMBERID} //Request error
 ``` 
 #### `Promise` getCode(`numberID`) 
 ```javascript
  {code: CODE, id: NUMBERID} //Success
  {type: 'status', error: 'STATUS_CANCEL', id: NUMBERID} // if number cancelled
  {type: 'api', error: ERRORCODE, id: NUMBERID} // Api error (error codes here https://smshub.org/main#getStatus)
- {type: 'requset', id: NUMBERID} //Request error
+ {type: 'request', id: NUMBERID} //Request error
 ``` 
   
 #### `Promise` getBalance() 
 ```javascript
  {balance: BALANCE} - Success. BALANCE - float
  {type: 'api', error: ERRORCODE} //Api error (error codes here https://smshub.org/main#getBalance)
- {type: 'requset'} //Request error
+ {type: 'request'} //Request error
 ``` 
-#### `Promise` getNumbersStatusAndCostHubFree() 
+#### `Promise` getNumbersStatusAndCostHubFree() `!!!UNOFFICIAL HIDDEN METHOD!!!`
+                                                   
 ```javascript
  Object - Success.
- {type: 'api', error: ERRORCODE} //Api error (error codes here https://smshub.org/main#getBalance)
- {type: 'requset'} //Request error
+ {type: 'api', error: ERRORCODE} //Api error
+ {type: 'request'} //Request error
 ``` 
 
-#### `Promise` setParams(`service`, `maxPrice`, `random = true`, `country = 0`)
+#### `Promise` setParams(`service`, `maxPrice`, `random = true`, `country = 0`) `!!!UNOFFICIAL HIDDEN METHOD!!!`
 ```javascript
- {type: 'api', error: ERRORCODE}// Api error (error codes here https://smshub.org/main#getBalance)
- {type: 'requset'} //Request error
+ {type: 'api', error: ERRORCODE}// Api error
+ {type: 'request'} //Request error
 ``` 
-#### `Promise` getCurrentActivations()
+#### `Promise` getCurrentActivations() `!!!UNOFFICIAL HIDDEN METHOD!!!`
 ```javascript
    {data: DATA} //Success.
-   {type: 'api', error: ERRORCODE} //Api error (error codes here https://smshub.org/main#getBalance)
-   {type: 'requset'} //Request error
+   {type: 'api', error: ERRORCODE} //Api error
+   {type: 'request'} //Request error
+``` 
+#### `Promise` getListOfCountriesAndOperators() `!!!UNOFFICIAL HIDDEN METHOD!!!`
+
+This method returns list of countries and orerators and current setted country/operator
+
+currentOperator & currentCountry is null if token is wrong
+```javascript
+   {status: 'success', services: {...}, data:[ {…}, {…}, … ],  currentOperator: 'OPERATOR NAME', currentCountry: 'COUNTRY ID'} //Success.
+   {type: 'api', error: ERRORCODE} //Api error
+   {type: 'request'} //Request error
+``` 
+
+#### `Promise` operatorAndCountryChange(`operator = 'any'`, `country = 0`, `url = 'https://smshub.org/api.php'`) `!!!UNOFFICIAL HIDDEN METHOD!!!`
+
+This method change mobile operator setting
+
+WARNING!!! If token is wrong, method returns success status!
+
+```javascript
+   { status: "success", msg: "Оператор успешно изменен" } //Success.
+   {type: 'api', error: ERRORCODE} //Api error
+   {type: 'request'} //Request error
 ``` 
