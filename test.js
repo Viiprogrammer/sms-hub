@@ -58,7 +58,6 @@ describe("operatorAndCountryChange (Change operator and country)", function () {
 describe("getListOfCountriesAndOperators", function () {
     it("getListOfCountriesAndOperators()", function (done) {
         sms.getListOfCountriesAndOperators().then(({status, services, data,  currentOperator, currentCountry}) => {
-            console.log( currentOperator)
             expect(status).to.equal('success')
             if(services && data.length){
                 done();
