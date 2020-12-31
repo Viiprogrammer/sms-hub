@@ -276,7 +276,7 @@ class SMSHub {
                         if (response === 'ACCESS_NUMBER') {
                             resolve({id: id, number: number});
                         }
-                    } else reject({type: 'api', country: country, service: service});
+                    } else reject({type: 'api', country: country, service: service, error: error});
                 }
             });
         });
